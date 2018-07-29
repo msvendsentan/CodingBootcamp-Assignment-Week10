@@ -1,0 +1,25 @@
+{
+  "name": "codingbootcamp-assignment-week10",
+  "version": "1.0.0",
+  "description": "A simple language interpreter for Week 10 of UofT's Coding Bootcamp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/msvendsentan/CodingBootcamp-Assignment-Week10.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/msvendsentan/CodingBootcamp-Assignment-Week10/issues"
+  },
+  "homepage": "https://github.com/msvendsentan/CodingBootcamp-Assignment-Week10#readme",
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "node-spotify-api": "^1.0.7",
+    "request": "^2.87.0",
+    "twitter": "^1.7.1"
+  }
+}
