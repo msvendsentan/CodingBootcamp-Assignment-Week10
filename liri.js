@@ -18,12 +18,20 @@ var commandList = {
     "my-tweets": function() {
         client.get('statuses/user_timeline', twitterparams, function(error, tweets, response) {
             if (!error) {
-                console.log("Most recent tweets:")
+                console.log("Most recent tweets:");
+                fs.appendFile("log.txt", "my-tweets\r\n\r\n", function(err) {});
                 tweets.forEach(function(element) {
                     console.log(element.text);
                     console.log(element.created_at);
                     console.log("----------------------");
+                    fs.appendFile("log.txt", 
+                        element.text + "\r\n" +
+                        element.created_at + "\r\n" +
+                        "-----------\r\n", 
+                        function(err) {}
+                    );
                 });
+                fs.appendFile("log.txt", "=============\r\n\r\n", function(err) {});
             } else {
                 console.log(error);
             }
@@ -34,9 +42,18 @@ var commandList = {
             spotify.search({ type: "track", query: query, }, function(error, data) {
                 if (!error) {
                     console.log("The song's artist is: " + data.tracks.items[0].artists[0].name);
-                    console.log("The song'sname is: " + data.tracks.items[0].name);
-                    console.log("The song's preview link is: " + data.tracks.items[0].external_urls.spotify);
+                    console.log("The song's name is: " + data.tracks.items[0].name);    
+                    console.log("The song's preview link is: " + data.tracks.items[0].external_urls.spotify);                    
                     console.log("The song's album is: " + data.tracks.items[0].album.name);
+                    fs.appendFile("log.txt", 
+                        "spotify-this-song " + query + "\r\n\r\n" +
+                        "The song's artist is: " + data.tracks.items[0].artists[0].name + "\r\n" + 
+                        "The song's name is: " + data.tracks.items[0].name + "\r\n" +
+                        "The song's preview link is: " + data.tracks.items[0].external_urls.spotify + "\r\n" +
+                        "The song's album is: " + data.tracks.items[0].album.name + "\r\n" +
+                        "=============\r\n\r\n", 
+                        function(err) {}
+                    );
                 } else {
                     console.log(error);
                 }
@@ -60,6 +77,18 @@ var commandList = {
                     console.log("The movie's language is: " + JSON.parse(body).Language);
                     console.log("The movie's plot is: " + JSON.parse(body).Plot);
                     console.log("The movie's actors are: " + JSON.parse(body).Actors);
+                    fs.appendFile("log.txt", 
+                        "movie-this " + query + "\r\n\r\n" + 
+                        "The movie's release year is: " + JSON.parse(body).Year + "\r\n" + 
+                        "The movie's IMDB rating is: " + JSON.parse(body).imdbRating + "\r\n" + 
+                        "The movie's Rotten Tomatoes rating is: " + rtobject.Value + "\r\n" + 
+                        "The movie's country of production is: " + JSON.parse(body).Country + "\r\n" + 
+                        "The movie's language is: " + JSON.parse(body).Language + "\r\n" + 
+                        "The movie's plot is: " + JSON.parse(body).Plot + "\r\n" + 
+                        "The movie's actors are: " + JSON.parse(body).Actors + "\r\n" + 
+                        "=============\r\n\r\n", 
+                        function(err) {}
+                    );
                 } else {
                     console.log(error);
                 }

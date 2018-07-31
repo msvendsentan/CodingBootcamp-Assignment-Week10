@@ -1,0 +1,40 @@
+my-tweets
+
+Testing tweet 3.
+Sun Jul 29 17:47:01 +0000 2018
+-----------
+Testing tweet 2.
+Sun Jul 29 17:46:47 +0000 2018
+-----------
+Testing tweet 1.
+Sun Jul 29 17:46:35 +0000 2018
+-----------
+=============
+
+spotify-this-song All the Small Things
+
+The song's artist is: blink-182
+The song's name is: All The Small Things
+The song's preview link is: https://open.spotify.com/track/7yCPwWs66K8Ba5lFuU2bcx
+The song's album is: Enema Of The State
+=============
+
+movie-this Remember the Titans
+
+The movie's release year is: 2000
+The movie's IMDB rating is: 7.8
+The movie's Rotten Tomatoes rating is: 73%
+The movie's country of production is: USA
+The movie's language is: English
+The movie's plot is: The true story of a newly appointed African-American coach and his high school team on their first season as a racially integrated unit.
+The movie's actors are: Denzel Washington, Will Patton, Wood Harris, Ryan Hurst
+=============
+
+spotify-this-song I Want it That Way
+
+The song's artist is: Backstreet Boys
+The song's name is: I Want It That Way
+The song's preview link is: https://open.spotify.com/track/6e40mgJiCid5HRAGrbpGA6
+The song's album is: The Hits--Chapter One
+=============
+
