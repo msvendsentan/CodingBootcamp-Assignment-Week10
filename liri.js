@@ -2,6 +2,7 @@ require("dotenv").config();
 var Twitter = require("twitter");
 var Spotify = require("node-spotify-api");
 var request = require("request");
+var fs = require("fs");
 
 var keys = require("./keys.js");
 
@@ -11,6 +12,7 @@ var client = new Twitter(keys.twitter);
 var twitterparams = {screen_name: "Michael79766623"};
 
 var userCommand = process.argv[2];
+var query = process.argv.slice(3).join(" ");
 
 var commandList = {
     "my-tweets": function() {
@@ -22,17 +24,30 @@ var commandList = {
                     console.log(element.created_at);
                     console.log("----------------------");
                 });
+            } else {
+                console.log(error);
             }
         });
     },
-    "spotify-this-song": function() {
-
+    "spotify-this-song": function(query) {
+        if (query) {
+            spotify.search({ type: "track", query: query, }, function(error, data) {
+                if (!error) {
+                    console.log("The song's artist is: " + data.tracks.items[0].artists[0].name);
+                    console.log("The song'sname is: " + data.tracks.items[0].name);
+                    console.log("The song's preview link is: " + data.tracks.items[0].external_urls.spotify);
+                    console.log("The song's album is: " + data.tracks.items[0].album.name);
+                } else {
+                    console.log(error);
+                }
+            });
+        } else {
+            console.log("Please type a song name after the spotify-this-song command!");
+        }
     },
-    "movie-this": function() {
-        var movie = process.argv.slice(3).join(" ");
-        movie = movie.replace(/\s/g, "+");
-        if (movie) {
-            request("http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy", function(error, response, body) {
+    "movie-this": function(query) {
+        if (query) {
+            request("http://www.omdbapi.com/?t=" + query.replace(/\s/g, "+") + "&y=&plot=short&apikey=trilogy", function(error, response, body) {
                 if (!error && response.statusCode === 200) {
                     console.log("The movie's title is: " + JSON.parse(body).Title);
                     console.log("The movie's release year is: " + JSON.parse(body).Year);
@@ -45,6 +60,8 @@ var commandList = {
                     console.log("The movie's language is: " + JSON.parse(body).Language);
                     console.log("The movie's plot is: " + JSON.parse(body).Plot);
                     console.log("The movie's actors are: " + JSON.parse(body).Actors);
+                } else {
+                    console.log(error);
                 }
             });
         } else {
@@ -52,7 +69,17 @@ var commandList = {
         }
     },
     "do-what-it-says": function() {
+        fs.readFile("random.txt", "utf8", function(error, data) {
+            if (!error) {
+                var randomCommand = data.split(",");
+                if (commandList.hasOwnProperty(randomCommand[0])) {
+                    commandList[randomCommand[0]](randomCommand[1].replace(/['"]+/g, ""));
+                }
 
+            } else {
+                return console.log(error);
+            }
+        })
     },
     "help": function() {
         console.log("Available commands:");
@@ -66,7 +93,7 @@ var commandList = {
 }
 
 if (commandList.hasOwnProperty(userCommand)) {
-    commandList[userCommand]();
+    commandList[userCommand](query);
 } else if (userCommand) {
     console.log("Please use a proper command. Type \"node liri.js help\" to see a list of commands.");
 } else {
